@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api import auth  # agregar
 
 app = FastAPI(
     title="Rugby Manager API",
@@ -7,14 +8,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS — permite que el frontend en React pueda llamar al backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # URL de Vite en desarrollo
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Routers
+app.include_router(auth.router)  # agregar
 
 @app.get("/", tags=["Health"])
 def root():
