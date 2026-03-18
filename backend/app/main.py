@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import auth  # agregar
+from app.api import auth, jugadores, planteles, partidos, estadisticas, penales, lesiones
 
 app = FastAPI(
     title="Rugby Manager API",
@@ -16,8 +16,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
-app.include_router(auth.router)  # agregar
+app.include_router(auth.router)
+app.include_router(jugadores.router)
+app.include_router(planteles.router)
+app.include_router(partidos.router)
+app.include_router(estadisticas.router)
+app.include_router(penales.router)
+app.include_router(lesiones.router)
 
 @app.get("/", tags=["Health"])
 def root():

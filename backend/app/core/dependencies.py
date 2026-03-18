@@ -1,14 +1,14 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from app.db.database import get_db
 from app.core.security import decode_access_token
 from app.models.usuario import Usuario, RolUsuario
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+security = HTTPBearer()
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ) -> Usuario:
     credentials_exception = HTTPException(
@@ -16,11 +16,11 @@ def get_current_user(
         detail="Token inválido o expirado",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    payload = decode_access_token(token)
+    payload = decode_access_token(credentials.credentials)
     if payload is None:
         raise credentials_exception
 
-    user_id: int = payload.get("sub")
+    user_id = payload.get("sub")
     if user_id is None:
         raise credentials_exception
 
@@ -31,7 +31,6 @@ def get_current_user(
     return user
 
 def require_rol(*roles: RolUsuario):
-    """Dependencia para restringir acceso por rol"""
     def role_checker(current_user: Usuario = Depends(get_current_user)):
         if current_user.rol not in roles:
             raise HTTPException(
