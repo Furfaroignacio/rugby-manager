@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-cn-black dark:bg-gray-900 dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-cn-blue hover:bg-cn-blue-dark text-white font-medium px-4 py-2 rounded-lg transition-colors;
+  }
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-cn-black border border-gray-200 font-medium px-4 py-2 rounded-lg transition-colors dark:bg-gray-800 dark:text-white dark:border-gray-700;
+  }
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5;
+  }
+  .stat-card {
+    @apply bg-gray-50 dark:bg-gray-700 rounded-lg p-4;
+  }
+  .badge-active {
+    @apply bg-cn-blue-light text-cn-blue-dark text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+  .badge-injured {
+    @apply bg-orange-100 text-orange-600 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+  .badge-suspended {
+    @apply bg-yellow-100 text-yellow-600 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+  .badge-inactive {
+    @apply bg-gray-100 text-gray-500 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+}
