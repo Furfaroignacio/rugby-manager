@@ -14,6 +14,7 @@ import PartidoDetalle from './pages/partidos/PartidoDetalle'
 import LesionesList from './pages/lesiones/LesionesList'
 import LesionDetalle from './pages/lesiones/LesionDetalle'
 import Reportes from './pages/Reportes'
+import Cancha from './pages/partidos/Cancha'
 
 function AppLayout({ children }) {
   return (
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="/lesiones" element={<AppLayout><LesionesList /></AppLayout>} />
       <Route path="/lesiones/:id" element={<AppLayout><LesionDetalle /></AppLayout>} />
       <Route path="/reportes" element={<AppLayout><Reportes /></AppLayout>} />
+      <Route path="/partidos/:id/cancha" element={<AppLayout><Cancha /></AppLayout>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

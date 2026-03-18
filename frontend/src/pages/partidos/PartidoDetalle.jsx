@@ -5,6 +5,7 @@ import { getEstadisticasPartido, createEstadistica } from '../../api/estadistica
 import { getJugadores } from '../../api/jugadores'
 import { ArrowLeft } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function PartidoDetalle() {
   const { id } = useParams()
@@ -49,6 +50,9 @@ export default function PartidoDetalle() {
         <div>
           <h1 className="text-xl font-medium text-gray-900 dark:text-white">vs {partido.rival}</h1>
           <p className="text-sm text-gray-500">{partido.fecha} · {partido.condicion} {partido.torneo ? `· ${partido.torneo}` : ''}</p>
+          <Link to={`/partidos/${id}/cancha`} className="btn-secondary text-sm flex items-center gap-2">
+          Ver en cancha
+          </Link>
         </div>
       </div>
 
