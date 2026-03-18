@@ -123,24 +123,34 @@ export default function PartidoDetalle() {
 
       {/* Estadísticas */}
       <div className="card">
-        <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Estadísticas del partido</h2>
-        <div className="flex gap-2 mb-4 flex-wrap">
-          <select value={nuevaEst.jugador_id} onChange={e => setNuevaEst({ ...nuevaEst, jugador_id: e.target.value })}
-            className="flex-1 min-w-40 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-cn-blue">
-            <option value="">Seleccionar jugador</option>
-            {jugadoresSinEst.map(j => <option key={j.id} value={j.id}>{j.nombre} {j.apellido}</option>)}
-          </select>
-          {[['tries','Tries'],['tackles','Tackles'],['penales_cometidos','Penales']].map(([key, label]) => (
-            <input key={key} type="number" min="0" placeholder={label} value={nuevaEst[key]}
-              onChange={e => setNuevaEst({ ...nuevaEst, [key]: parseInt(e.target.value) || 0 })}
-              className="w-24 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-cn-blue"
-            />
-          ))}
-          <button onClick={() => mutEstadistica.mutate({ jugador_id: parseInt(nuevaEst.jugador_id), tries: nuevaEst.tries, tackles: nuevaEst.tackles, penales_cometidos: nuevaEst.penales_cometidos })}
-            disabled={!nuevaEst.jugador_id} className="btn-primary">
-            Registrar
-          </button>
+  <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Estadísticas del partido</h2>
+  <div className="mb-3">
+    <div className="flex gap-2 flex-wrap items-end">
+      <div className="flex-1 min-w-40">
+        <label className="block text-xs text-gray-500 mb-1">Jugador</label>
+        <select value={nuevaEst.jugador_id} onChange={e => setNuevaEst({ ...nuevaEst, jugador_id: e.target.value })}
+          className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-cn-blue">
+          <option value="">Seleccionar jugador</option>
+          {jugadoresSinEst.map(j => <option key={j.id} value={j.id}>{j.nombre} {j.apellido}</option>)}
+        </select>
+      </div>
+      {[['tries','Tries'],['tackles','Tackles'],['penales_cometidos','Penales']].map(([key, label]) => (
+        <div key={key} className="w-24">
+          <label className="block text-xs text-gray-500 mb-1">{label}</label>
+          <input type="number" min="0" value={nuevaEst[key]}
+            onChange={e => setNuevaEst({ ...nuevaEst, [key]: parseInt(e.target.value) || 0 })}
+            className="w-full border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-cn-blue"
+          />
         </div>
+      ))}
+      <div className="pb-0.5">
+        <button onClick={() => mutEstadistica.mutate({ jugador_id: parseInt(nuevaEst.jugador_id), tries: nuevaEst.tries, tackles: nuevaEst.tackles, penales_cometidos: nuevaEst.penales_cometidos })}
+          disabled={!nuevaEst.jugador_id} className="btn-primary">
+          Registrar
+        </button>
+      </div>
+    </div>
+  </div>
         {estadisticas.length > 0 && (
           <table className="w-full text-sm">
             <thead>
